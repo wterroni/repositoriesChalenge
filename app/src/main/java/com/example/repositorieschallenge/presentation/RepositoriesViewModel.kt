@@ -14,7 +14,7 @@ class RepositoriesViewModel(
     val repositoriesOb = MutableLiveData<List<RepositoriesModel>>()
     val loadingOB = MutableLiveData<Boolean>()
     val repositoriesObExceptionOb = MutableLiveData<Exception>()
-    private var isMoreCategories = false
+    private var isMoreRepositories = false
     private var pageCount = 1
 
     init {
@@ -44,12 +44,12 @@ class RepositoriesViewModel(
         }
     }
 
-    fun loadMoreCategories() {
+    fun loadMoreRepositories() {
         pageCount++
-        if(!isMoreCategories) {
+        if(!isMoreRepositories) {
             getRepositories()
         }
-        isMoreCategories = true
+        isMoreRepositories = true
     }
 
 

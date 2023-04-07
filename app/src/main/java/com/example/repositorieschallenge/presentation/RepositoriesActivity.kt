@@ -124,7 +124,7 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (!recyclerView.canScrollVertically(1) && lManager.childCount > 0) {
-                    repositoriesViewModel.loadMoreCategories()
+                    repositoriesViewModel.loadMoreRepositories()
                 }
             }
         })
