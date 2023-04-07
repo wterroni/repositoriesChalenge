@@ -1,10 +1,10 @@
 package com.example.repositorieschallenge
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.repositorieschallenge.presentation.RepositoriesActivity
 
@@ -26,15 +26,10 @@ class ExampleInstrumentedTest {
     var mActivityRule = ActivityScenarioRule(RepositoriesActivity::class.java)
 
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.repositorieschallenge", appContext.packageName)
-    }
-
-    @Test
     fun checkScreenLoaded() {
         onView(withId(R.id.search_layout))
             .check(matches(isDisplayed()))
+
+        onView(withId(R.id.label_name)).perform(typeText("Repo Name:"))
     }
 }
