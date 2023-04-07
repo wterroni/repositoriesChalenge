@@ -6,13 +6,14 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.recyclerview.widget.MergeAdapter
 import com.example.repositorieschallenge.R
 import com.example.repositorieschallenge.component.InfoViewState
 import com.example.repositorieschallenge.databinding.RepositoriesActivityBinding
 import com.example.repositorieschallenge.domain.model.RepositoriesModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private val binding by lazy {
@@ -24,6 +25,9 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
 
     private lateinit var lManager: StaggeredGridLayoutManager
     private val repositoriesViewModel: RepositoriesViewModel by viewModel()
+
+    private lateinit var repositoriesList: ArrayList<RepositoriesModel>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,10 +79,11 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     private fun handleRepository(repositories: List<RepositoriesModel>) {
+        repositoriesList = repositories as ArrayList<RepositoriesModel>
         binding.shimmerViewContainer.stopShimmer()
         binding.shimmerViewContainer.visibility = View.GONE
         binding.repositoriesRecyclerView.visibility = View.VISIBLE
-        repositoriesAdapter.setList(repositories)
+        repositoriesAdapter.addData(repositories)
     }
 
     private fun handleError(exception: Exception?) {
@@ -99,10 +104,7 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         }
 
         layoutManager = lManager
-        adapter = MergeAdapter(
-            repositoriesAdapter,
-            loadStateAdapter
-        )
+        adapter = repositoriesAdapter
     }
 
     private fun setListeners() {
@@ -116,6 +118,16 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
             }
             repositoriesAdapter.notifyItemRangeChanged(0, repositoriesAdapter.itemCount ?: 0)
         }
+        binding.repositoriesRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!recyclerView.canScrollVertically(1) && lManager.childCount > 0) {
+                    repositoriesViewModel.loadMoreCharacters()
+                }
+            }
+        })
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

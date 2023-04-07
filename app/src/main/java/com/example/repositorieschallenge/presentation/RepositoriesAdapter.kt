@@ -19,7 +19,6 @@ import com.squareup.picasso.Picasso
 class RepositoriesAdapter(
 ) : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>(), Filterable {
 
-    //private val items: MutableList<RepositoriesModel> = mutableListOf()
     var itemsFiltered: MutableList<RepositoriesModel> = mutableListOf()
     private var layoutManager: StaggeredGridLayoutManager? = null
 
@@ -37,10 +36,9 @@ class RepositoriesAdapter(
             notifyItemRangeInserted(oldSize, newSize)
         }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(newItems: List<RepositoriesModel>) {
-        items.clear()
-        items.addAll(newItems)
+    fun addData(list: List<RepositoriesModel>) {
+        items = list as ArrayList<RepositoriesModel>
+        itemsFiltered = items
         notifyDataSetChanged()
     }
 
@@ -48,7 +46,7 @@ class RepositoriesAdapter(
         this.layoutManager = layoutManager
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = itemsFiltered.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -64,7 +62,7 @@ class RepositoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(itemsFiltered[position])
     }
 
     override fun getItemViewType(position: Int): Int {

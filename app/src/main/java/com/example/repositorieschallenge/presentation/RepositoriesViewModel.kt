@@ -11,6 +11,7 @@ class RepositoriesViewModel(private val interactor: RepositoriesInteractor): Bas
     val repositoriesOb = MutableLiveData<List<RepositoriesModel>>()
     val loadingOB = MutableLiveData<Boolean>()
     val repositoriesObExceptionOb = MutableLiveData<Exception>()
+    private var pageCount = 1
 
     init {
         getRepositories()
@@ -19,7 +20,7 @@ class RepositoriesViewModel(private val interactor: RepositoriesInteractor): Bas
     private fun getRepositories() {
         launch {
             try {
-                val repositories = interactor.getRepositories()
+                val repositories = interactor.getRepositories(pageCount.toString())
                 repositoriesOb.value = repositories
                 loadingOB.value = false
             } catch (ex: Exception) {
@@ -28,6 +29,12 @@ class RepositoriesViewModel(private val interactor: RepositoriesInteractor): Bas
             }
         }
     }
+
+    fun loadMoreCharacters() {
+        pageCount++
+        getRepositories()
+    }
+
 
     fun retry() {
         loadingOB.value = true

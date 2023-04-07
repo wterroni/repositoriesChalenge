@@ -1,6 +1,7 @@
 package com.example.repositorieschallenge.presentation
 
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.repositorieschallenge.R
@@ -31,7 +32,7 @@ class LoadStateAdapter: RecyclerView.Adapter<LoadStateAdapter.LoadStateViewHolde
     private var itemsCount: Int = 0
 
     inner class LoadStateViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(VIEW_ID)) {
-        private val progressBar: TextView = parent.findViewById(R.id.progress_bar)
+        private val progressBar: ProgressBar = parent.findViewById(R.id.progress_bar)
         fun bind(loadState: LoadState) = with(itemView) {
             progressBar.visible(
                 visible = LoadState.Loading == loadState
