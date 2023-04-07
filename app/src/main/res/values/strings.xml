@@ -9,4 +9,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="label_repo_name">Repo Name:</string>
+    <string name="label_stars">Stars</string>
+    <string name="label_forks">Forks</string>
+    <string name="label_author">Author</string>
+
+    <string name="change_list_accessibility">alterar layout da lista</string>
+
+    <string name="title_error">Não foi possível carregar a página, tente novamente.</string>
+    <string name="description_error">Toque no ícone acima para tentar novamente.</string>
 </resources>
