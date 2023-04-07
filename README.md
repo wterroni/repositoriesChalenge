@@ -1,8 +1,8 @@
 # repositoriesChalenge
 
-Esse projeto possui chamada para api de repositorios do git com scroll infinito requisitando a api
-por paginação. Também possui shimmer no loading, custom view para exibição de erro genérico e uma
-Search View para pesquisar os repositorios pelo repo name.
+Esse projeto possui chamada para api de repositorios do git com mais estrelas em Kotlin, 
+scroll infinito e requisitando a api por paginação. Também possui shimmer no loading, custom view 
+para exibição de erro genérico e uma Search View para pesquisar os repositorios pelo repo name.
 
 Sempre que a api devolve respostas com sucesso, é salvo no shared preferences esse json, permitindo
 o armazenamento dos dados em cache e a utilização do app sem internet.
