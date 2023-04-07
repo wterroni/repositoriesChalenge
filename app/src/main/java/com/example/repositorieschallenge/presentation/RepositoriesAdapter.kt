@@ -36,6 +36,7 @@ class RepositoriesAdapter(
             notifyItemRangeInserted(oldSize, newSize)
         }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addData(list: List<RepositoriesModel>) {
         items = list as ArrayList<RepositoriesModel>
         itemsFiltered = items

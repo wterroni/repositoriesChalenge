@@ -21,7 +21,6 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     private val repositoriesAdapter: RepositoriesAdapter by lazy { RepositoriesAdapter() }
-    private val loadStateAdapter: LoadStateAdapter by lazy { LoadStateAdapter() }
 
     private lateinit var lManager: StaggeredGridLayoutManager
     private val repositoriesViewModel: RepositoriesViewModel by viewModel()
@@ -81,6 +80,7 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     private fun handleRepository(repositories: List<RepositoriesModel>) {
         repositoriesList = repositories as ArrayList<RepositoriesModel>
         binding.shimmerViewContainer.stopShimmer()
+        binding.infoView.visibility = View.GONE
         binding.shimmerViewContainer.visibility = View.GONE
         binding.repositoriesRecyclerView.visibility = View.VISIBLE
         repositoriesAdapter.addData(repositories)
@@ -93,9 +93,9 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
                 iconRes = R.drawable.reload,
                 title = getString(R.string.title_error),
                 description = getString(R.string.description_error),
-                iconAction = repositoriesViewModel::retry
-            )
-        )
+                iconAction = {
+                    repositoriesViewModel.retry()
+                }))
     }
 
     private fun setupRecyclewView() = with(binding.repositoriesRecyclerView) {
@@ -124,7 +124,7 @@ class RepositoriesActivity : AppCompatActivity(), SearchView.OnQueryTextListener
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (!recyclerView.canScrollVertically(1) && lManager.childCount > 0) {
-                    repositoriesViewModel.loadMoreCharacters()
+                    repositoriesViewModel.loadMoreCategories()
                 }
             }
         })
