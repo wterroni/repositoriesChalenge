@@ -38,6 +38,7 @@ class RepositoriesViewModel(
     private fun getLocalRepositories(ex: Exception) {
         val repositories = uiModel.getLocalRepositories()
         if (repositories.isNotEmpty()) {
+            isMoreRepositories = true
             repositoriesOb.value = repositories
         } else {
             repositoriesObExceptionOb.value = ex
@@ -49,7 +50,6 @@ class RepositoriesViewModel(
         if(!isMoreRepositories) {
             getRepositories()
         }
-        isMoreRepositories = true
     }
 
 
